@@ -10,13 +10,16 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 @Slf4j
 @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
 public class JoinListener {
 
     @SubscribeEvent
-    public static void onPlayerLogin(ClientPlayerNetworkEvent.LoggingIn event) {
+    public static void onPlayerLogin(final @NotNull ClientPlayerNetworkEvent.LoggingIn event) {
         final ServerData serverData = Minecraft.getInstance().getCurrentServer();
 
         if (serverData == null) {
@@ -27,7 +30,11 @@ public class JoinListener {
 
         log.debug("Joined server: {}", address);
 
-        CommonService commonService = ClientModEvents.getCommonService();
+        CommonService commonService = Objects.requireNonNull(
+                ClientModEvents.getCommonService(),
+                "ClientModEvents is not initialized!"
+        );
+
         commonService.handleLastServer(address);
     }
 }

@@ -10,14 +10,20 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 @Slf4j
 @Mod.EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class LogoutListener {
 
     @SubscribeEvent
-    public static void onPlayerLogout(ClientPlayerNetworkEvent.LoggingOut event) {
-        final CommonService commonService = ClientModEvents.getCommonService();
+    public static void onPlayerLogout(final @NotNull ClientPlayerNetworkEvent.LoggingOut event) {
+        final CommonService commonService = Objects.requireNonNull(
+                ClientModEvents.getCommonService(),
+                "ClientMod is not initialized!"
+        );
 
         final NetworkService networkService = commonService.getNetworkService();
         final String lastServerAddress = networkService.getLastServerAddress();

@@ -13,23 +13,28 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
 
 @Slf4j
 @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
 public class ClientModEvents {
 
     @Getter
+    @Nullable
     private static CommonService commonService;
 
     @SubscribeEvent
-    public static void clientSetup(final FMLClientSetupEvent event) {
+    public static void clientSetup(final @NotNull FMLClientSetupEvent event) {
         final Injector injector = EternalEmpiresClient.init();
 
         commonService = injector.getInstance(CommonService.class);
     }
 
     @SubscribeEvent
-    public static void register(final RegisterPayloadHandlersEvent event) {
+    public static void register(final @NotNull RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar registrar = event.registrar(Constants.MOD_ID)
                 .versioned("1")
                 .optional();
@@ -39,7 +44,10 @@ public class ClientModEvents {
                 (updateDiscordRpcPayload, context) -> context.enqueueWork(() -> {
                     log.debug("Received JSON: {}", updateDiscordRpcPayload.json());
 
-                    updateDiscordRpcPayload.handlePayload(commonService.getRichPresenceService());
+                    updateDiscordRpcPayload.handlePayload(Objects.requireNonNull(
+                            commonService.getRichPresenceService(),
+                            "ClientModEvents is not initialized!"
+                    ));
                 })
         );
     }

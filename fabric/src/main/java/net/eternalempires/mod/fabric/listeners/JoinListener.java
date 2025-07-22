@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.ServerData;
+import org.jetbrains.annotations.NotNull;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor_ = @Inject)
@@ -17,7 +18,11 @@ public class JoinListener implements ClientPlayConnectionEvents.Join {
     private final CommonService commonService;
 
     @Override
-    public void onPlayReady(ClientPacketListener clientPacketListener, PacketSender packetSender, Minecraft minecraft) {
+    public void onPlayReady(
+            final @NotNull ClientPacketListener clientPacketListener,
+            final @NotNull PacketSender packetSender,
+            final @NotNull Minecraft minecraft
+    ) {
         final ServerData serverData = Minecraft.getInstance().getCurrentServer();
 
         if (serverData == null) {

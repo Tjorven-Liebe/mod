@@ -8,12 +8,15 @@ import net.eternalempires.mod.common.util.discord.RichPresenceService;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.SimpleChannel;
+import org.jetbrains.annotations.NotNull;
 
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class PacketHandler {
 
+    @NotNull
     private final RichPresenceService richPresenceService;
 
+    @NotNull
     private final SimpleChannel updateRichPresence = ChannelBuilder.named(
                     ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "mod"))
             .serverAcceptedVersions((status, i) -> true)

@@ -7,13 +7,19 @@ import net.eternalempires.mod.common.util.discord.RichPresenceService;
 import net.eternalempires.mod.neoforge.ClientModEvents;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 @Slf4j
 public class LogoutListener {
 
     @SubscribeEvent
-    public static void onPlayerLogout(ClientPlayerNetworkEvent.LoggingOut event) {
-        final CommonService commonService = ClientModEvents.getCommonService();
+    public static void onPlayerLogout(final @NotNull ClientPlayerNetworkEvent.LoggingOut event) {
+        final CommonService commonService = Objects.requireNonNull(
+                ClientModEvents.getCommonService(),
+                "ClientModEvents is not initialized!"
+        );
 
         final NetworkService networkService = commonService.getNetworkService();
         final String lastServerAddress = networkService.getLastServerAddress();

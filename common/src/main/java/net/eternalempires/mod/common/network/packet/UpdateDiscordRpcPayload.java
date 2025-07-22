@@ -9,11 +9,13 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Slf4j
 public class UpdateDiscordRpcPayload extends AbstractEternalEmpiresPayload {
 
-    public static final StreamCodec<ByteBuf, UpdateDiscordRpcPayload> BYTEBUF_CODEC =
+    @NotNull
+    public static final StreamCodec<@NotNull ByteBuf, @NotNull UpdateDiscordRpcPayload> BYTEBUF_CODEC =
             StreamCodec.of((buf, value) -> buf.writeBytes(value.data),
                     buf -> {
                         final byte[] data = new byte[buf.readableBytes()];
@@ -23,17 +25,21 @@ public class UpdateDiscordRpcPayload extends AbstractEternalEmpiresPayload {
                         return new UpdateDiscordRpcPayload(data);
                     });
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, UpdateDiscordRpcPayload> FORGE_CODEC =
+    @NotNull
+    public static final StreamCodec<@NotNull RegistryFriendlyByteBuf, @NotNull UpdateDiscordRpcPayload> FORGE_CODEC =
             StreamCodec.of(
                     (buf, packet) -> buf.writeBytes(packet.data),
                     buf -> {
-                        byte[] data = new byte[buf.readableBytes()];
+                        final byte[] data = new byte[buf.readableBytes()];
+
                         buf.readBytes(data);
+
                         return new UpdateDiscordRpcPayload(data);
                     }
             );
 
-    public static final StreamCodec<FriendlyByteBuf, UpdateDiscordRpcPayload> FABRIC_CODEC =
+    @NotNull
+    public static final StreamCodec<@NotNull FriendlyByteBuf, @NotNull UpdateDiscordRpcPayload> FABRIC_CODEC =
             StreamCodec.of((buf, value) -> buf.writeBytes(value.data),
                     buf -> {
                         final byte[] data = new byte[buf.readableBytes()];
@@ -43,25 +49,26 @@ public class UpdateDiscordRpcPayload extends AbstractEternalEmpiresPayload {
                         return new UpdateDiscordRpcPayload(data);
                     });
 
-    public UpdateDiscordRpcPayload(FriendlyByteBuf buffer) {
+    public UpdateDiscordRpcPayload(final @NotNull FriendlyByteBuf buffer) {
         super(buffer);
     }
 
-    public UpdateDiscordRpcPayload(byte[] data) {
+    public UpdateDiscordRpcPayload(final byte[] data) {
         super(data);
     }
 
     @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
+    public @NotNull Type<? extends @NotNull CustomPacketPayload> type() {
         return TYPE;
     }
 
+    @Nullable
     private String extractRegionName() {
         return extractJsonField("data.name");
     }
 
     @Override
-    public void handlePayload(RichPresenceService service) {
+    public void handlePayload(final @NotNull RichPresenceService service) {
         log.debug("Received JSON: {}", json);
 
         final String type = getTypeField();

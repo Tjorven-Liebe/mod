@@ -8,16 +8,23 @@ import net.eternalempires.mod.common.util.discord.RichPresenceService;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import org.jetbrains.annotations.NotNull;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class LogoutListener implements ClientPlayConnectionEvents.Disconnect {
 
+    @NotNull
     private final NetworkService networkService;
+
+    @NotNull
     private final RichPresenceService richPresenceService;
 
     @Override
-    public void onPlayDisconnect(ClientPacketListener clientPacketListener, Minecraft minecraft) {
+    public void onPlayDisconnect(
+            final @NotNull ClientPacketListener clientPacketListener,
+            final @NotNull Minecraft minecraft
+    ) {
         final String lastServerIP = this.networkService.getLastServerAddress();
 
         if (lastServerIP == null || !this.richPresenceService.isStarted()) {

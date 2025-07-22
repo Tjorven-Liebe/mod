@@ -13,7 +13,10 @@ import org.jetbrains.annotations.NotNull;
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class CommonService {
 
+    @NotNull
     private final RichPresenceService richPresenceService;
+
+    @NotNull
     private final NetworkService networkService;
 
     public void handleLastServer(final @NotNull String address) {

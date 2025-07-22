@@ -12,6 +12,8 @@ import net.eternalempires.mod.common.util.discord.RichPresenceService;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
@@ -19,14 +21,16 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public abstract class AbstractEternalEmpiresPayload implements CustomPacketPayload {
 
-    public static final CustomPacketPayload.Type<UpdateDiscordRpcPayload> TYPE =
+    @NotNull
+    public static final CustomPacketPayload.Type<@NotNull UpdateDiscordRpcPayload> TYPE =
             new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "mod"));
 
     protected final byte[] data;
 
+    @Nullable
     protected final String json;
 
-    public AbstractEternalEmpiresPayload(FriendlyByteBuf buffer) {
+    public AbstractEternalEmpiresPayload(final @NotNull FriendlyByteBuf buffer) {
         this.data = new byte[buffer.readableBytes()];
         this.json = new String(this.data, StandardCharsets.UTF_8);
 
@@ -38,7 +42,7 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
         this.json = new String(data, StandardCharsets.UTF_8);
     }
 
-    public void encode(FriendlyByteBuf buffer) {
+    public void encode(final @NotNull FriendlyByteBuf buffer) {
         buffer.writeBytes(data);
     }
 
@@ -46,18 +50,21 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
         return data;
     }
 
+    @Nullable
     public String json() {
         return json;
     }
 
+    @Nullable
     public String getTypeField() {
         return extractJsonField("type");
     }
 
-    protected String extractJsonField(String fieldName) {
+    @Nullable
+    protected String extractJsonField(final @NotNull String fieldName) {
         if (this.json == null) return null;
 
-        int jsonStart = this.json.indexOf('{');
+        final int jsonStart = this.json.indexOf('{');
         if (jsonStart == -1) return null;
 
         final String rawJson = this.json.substring(jsonStart);
@@ -84,5 +91,5 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
         return current.isJsonPrimitive() ? current.getAsString() : current.toString();
     }
 
-    public abstract void handlePayload(RichPresenceService service);
+    public abstract void handlePayload(@NotNull RichPresenceService service);
 }

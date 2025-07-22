@@ -9,6 +9,8 @@ import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.eternalempires.mod.common.Constants;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,8 +19,10 @@ import java.util.concurrent.Executors;
 @Singleton
 public class RichPresenceService implements Runnable {
 
+    @NotNull
     private final Thread mainThread = Thread.currentThread();
 
+    @NotNull
     private final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadFactoryBuilder()
             .setNameFormat("Discord-RPC-Callback-Thread").build()
     );
@@ -26,6 +30,7 @@ public class RichPresenceService implements Runnable {
     @Getter
     private boolean started = false;
 
+    @Nullable
     private Thread callbackThread;
 
     private long startTimeStamp;
@@ -92,7 +97,7 @@ public class RichPresenceService implements Runnable {
         log.debug("Discord Rich-Presence stopped.");
     }
 
-    public void updateLocation(String location) {
+    public void updateLocation(final @NotNull String location) {
         if (!started) {
             return;
         }

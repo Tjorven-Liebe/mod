@@ -8,12 +8,14 @@ import net.eternalempires.mod.common.network.packet.UpdateDiscordRpcPayload;
 import net.eternalempires.mod.common.util.discord.RichPresenceService;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import org.jetbrains.annotations.NotNull;
 
 @Slf4j
 @Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class PacketHandlersFabric {
 
+    @NotNull
     private final RichPresenceService richPresenceService;
 
     public void register() {
@@ -22,7 +24,10 @@ public class PacketHandlersFabric {
         ClientPlayNetworking.registerGlobalReceiver(UpdateDiscordRpcPayload.TYPE, this::handleContext);
     }
 
-    private void handleContext(final UpdateDiscordRpcPayload payload, final ClientPlayNetworking.Context context) {
+    private void handleContext(
+            final @NotNull UpdateDiscordRpcPayload payload,
+            final @NotNull ClientPlayNetworking.Context context
+    ) {
         // TODO - Tjorven: should you ignore the closeable?
         context.client().execute(() -> {
             try {
