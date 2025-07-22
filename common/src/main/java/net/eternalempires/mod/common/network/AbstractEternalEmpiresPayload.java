@@ -112,7 +112,7 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
     }
 
     /**
-     * This method is used to extract a field value by a key.
+     * This method is used to extract a field value by a key directly out of the data of the custom-payload-packet
      *
      * @param fieldName the key
      * @return the value as String
