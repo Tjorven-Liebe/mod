@@ -40,7 +40,7 @@ public class RichPresenceService implements Runnable {
         startTimeStamp = System.currentTimeMillis();
 
         final DiscordEventHandlers handlers = new DiscordEventHandlers.Builder()
-                .setReadyEventHandler((user) -> log.info("Discord RPC ready for user: {}", user.username))
+                .setReadyEventHandler((user) -> log.debug("Discord Rich-Presence ready for user: {}", user.username))
                 .build();
 
         DiscordRPC.discordInitialize(Constants.DISCORD_APPLICATION_ID, handlers, true);
@@ -89,7 +89,7 @@ public class RichPresenceService implements Runnable {
 
         DiscordRPC.discordShutdown();
 
-        log.info("Discord RPC stopped.");
+        log.debug("Discord Rich-Presence stopped.");
     }
 
     public void updateLocation(String location) {

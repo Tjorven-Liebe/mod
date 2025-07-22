@@ -28,7 +28,7 @@ public class LogoutListener {
             return;
         }
 
-        log.info("Disconnected from server: {}. Stopping Discord RPC.", lastServerAddress);
+        log.debug("Disconnected from server: {}. Stopping Discord RPC.", lastServerAddress);
 
         richPresenceService.stop();
 

@@ -62,23 +62,23 @@ public class UpdateDiscordRpcPayload extends AbstractEternalEmpiresPayload {
 
     @Override
     public void handlePayload(RichPresenceService service) {
-        log.debug("[EternalEmpires] Received JSON: {}", json);
+        log.debug("Received JSON: {}", json);
 
         final String type = getTypeField();
 
         if (!"player_enter_region".equalsIgnoreCase(type)) {
-            log.debug("[EternalEmpires] Ignoring non-region payload: type={}", type);
+            log.debug("Ignoring non-region payload: type={}", type);
             return;
         }
 
         final String regionName = extractRegionName();
 
         if (regionName != null) {
-            log.debug("[EternalEmpires] Updating location: {}", regionName);
+            log.debug("Updating location: {}", regionName);
 
             service.updateLocation(regionName);
         } else {
-            log.debug("[EternalEmpires] Failed to extract region name from JSON");
+            log.debug("Failed to extract region name from JSON");
         }
     }
 }
