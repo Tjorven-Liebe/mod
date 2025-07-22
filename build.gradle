@@ -9,7 +9,3 @@ plugins {
 forgix {
     autoRun = true
 }
-
-repositories {
-
-}

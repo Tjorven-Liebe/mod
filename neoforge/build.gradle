@@ -30,6 +30,7 @@ shadowJar {
 
     // Relocate only Discord RPC
     relocate 'com.discordrpc', 'net.eternalempires.shadowed.discordrpc'
+    relocate 'com.google.inject.**', 'net.eternalempires.shadowed.com.google.inject'
 
     // Exclude problematic packages
     exclude 'com/sun/jna/**'

@@ -1,29 +1,33 @@
 package net.eternalempires.mod.forge.network;
 
+import com.google.inject.Inject;
+import lombok.RequiredArgsConstructor;
 import net.eternalempires.mod.common.Constants;
-import net.eternalempires.mod.common.network.UpdateDiscordRpcPayload;
+import net.eternalempires.mod.common.network.packet.UpdateDiscordRpcPayload;
+import net.eternalempires.mod.common.util.discord.RichPresenceService;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.ChannelBuilder;
-import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.SimpleChannel;
 
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class PacketHandler {
 
-    private static final SimpleChannel INSTANCE = ChannelBuilder.named(
-                    ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "mod"))
-            .serverAcceptedVersions((_, _) -> true)
-            .clientAcceptedVersions((_, _) -> true)
-            .networkProtocolVersion(1)
-            .simpleChannel();
+    private final RichPresenceService richPresenceService;
 
-    //todo: SimpleChannel#messageBuilder is deprecated
+    private final SimpleChannel updateRichPresence = ChannelBuilder.named(
+                    ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "mod"))
+            .serverAcceptedVersions((status, i) -> true)
+            .clientAcceptedVersions((status, i) -> true)
+            .networkProtocolVersion(1)
+            .simpleChannel()
+            .play()
+            .clientbound()
+            .add(UpdateDiscordRpcPayload.class, UpdateDiscordRpcPayload.FORGE_CODEC, (packet, context) -> {
+                packet.handlePayload(this.richPresenceService);
+            })
+            .build();
+
     public static void register() {
-        INSTANCE.messageBuilder(UpdateDiscordRpcPayload.class, NetworkDirection.PLAY_TO_CLIENT)
-                .encoder(UpdateDiscordRpcPayload::encode)
-                .decoder(UpdateDiscordRpcPayload::new)
-                .consumerMainThread((packet, _) -> {
-                    packet.handlePayload(); // No need for Forge context!
-                })
-                .add();
+        // method is called in Forge Main class to register UPDATE_RPC above
     }
 }

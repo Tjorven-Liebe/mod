@@ -28,7 +28,7 @@ body:
     attributes:
       label: Minecraft version
       description: What version of Minecraft are you running?
-      placeholder: "1.21.5"
+      placeholder: "1.21.8"
     validations:
       required: true
   - type: dropdown

@@ -1,5 +1,8 @@
-package net.eternalempires.mod.common.client;
+package net.eternalempires.mod.common.util.discord;
 
+import com.google.common.base.Preconditions;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.google.inject.Singleton;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.arikia.dev.drpc.DiscordEventHandlers;
@@ -7,17 +10,27 @@ import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.eternalempires.mod.common.Constants;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @Slf4j
-public class DiscordRPCManager {
+@Singleton
+public class RichPresenceService implements Runnable {
+
+    private final Thread mainThread = Thread.currentThread();
+
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadFactoryBuilder()
+            .setNameFormat("Discord-RPC-Callback-Thread").build()
+    );
 
     @Getter
-    private static boolean started = false;
+    private boolean started = false;
 
-    private static Thread callbackThread;
+    private Thread callbackThread;
 
-    private static long startTimeStamp;
+    private long startTimeStamp;
 
-    public static void start() {
+    public void start() {
         if (started) {
             return;
         }
@@ -36,27 +49,34 @@ public class DiscordRPCManager {
                 //.setDetails("")
                 //.setBigImage("icon", "Eternal Adventure")
                 .setBigImage("eternalempires_e_1400x1400", "EternalEmpires.net")
-                .setSmallImage("grassblock", "Minecraft " + Constants.VERSION)  //new line, for small image
+                .setSmallImage("grass_block", "Minecraft " + Constants.VERSION)  //new line, for small image
                 .setStartTimestamps(startTimeStamp)
                 .build();
 
         DiscordRPC.discordUpdatePresence(presence);
 
-        callbackThread = new Thread(() -> {
-            while (!Thread.currentThread().isInterrupted()) {
-                DiscordRPC.discordRunCallbacks();
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    break;
-                }
-            }
-        }, "Discord-RPC-Callback-Thread");
-
-        callbackThread.start();
+        executorService.execute(this);
     }
 
-    public static void stop() {
+    @Override
+    public void run() {
+        callbackThread = Thread.currentThread();
+
+        Preconditions.checkState(callbackThread != mainThread, "This method should not be called from the main thread!");
+
+        while (!callbackThread.isInterrupted()) {
+            DiscordRPC.discordRunCallbacks();
+
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                log.error("Discord Callback Thread interrupted", e);
+                break;
+            }
+        }
+    }
+
+    public void stop() {
         if (!started) {
             return;
         }
@@ -72,12 +92,12 @@ public class DiscordRPCManager {
         log.info("Discord RPC stopped.");
     }
 
-    public static void updateLocation(String location) {
+    public void updateLocation(String location) {
         if (!started) {
             return;
         }
 
-        DiscordRichPresence presence = new DiscordRichPresence.Builder(location)
+        final DiscordRichPresence presence = new DiscordRichPresence.Builder(location)
                 .setDetails("Playing on Eternal Empires")
                 //.setBigImage("icon", "Wanderer")
                 .setBigImage("eternalempires_e_1400x1400", "EternalEmpires.net")
