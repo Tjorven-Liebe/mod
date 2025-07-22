@@ -9,7 +9,6 @@ import net.eternalempires.mod.common.network.UpdateDiscordRpcPayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.EventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;

@@ -20,5 +20,5 @@ public class PacketHandler {
             })
             .build();
 
-    public static void register() {}
+    public static void register() {}  // method is called in Forge Main class to register UPDATE_RPC above
 }
