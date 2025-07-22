@@ -6,7 +6,7 @@ The EternalEmpires mod is currently in active development. Security updates are 
 
 | Version  | Supported          |
 | -------- | ------------------ |
-| Latest   | :white_check_mark: |
+| Latest   | :x:                |
 | Others   | :x:                |
 
 ## 📣 Reporting a Vulnerability
