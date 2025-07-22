@@ -14,5 +14,5 @@ public class Constants {
             "beta.eternalempires.dev"
     );
 
-    public static final @NotNull String VERSION = SharedConstants.getCurrentVersion().getName();
+    public static final @NotNull String VERSION = SharedConstants.getCurrentVersion().name();
 }

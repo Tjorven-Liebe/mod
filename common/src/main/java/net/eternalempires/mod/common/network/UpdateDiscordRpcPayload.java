@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import lombok.extern.slf4j.Slf4j;
 import net.eternalempires.mod.common.client.DiscordRPCManager;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +21,16 @@ public class UpdateDiscordRpcPayload extends AbstractEternalEmpiresPayload {
 
                         return new UpdateDiscordRpcPayload(data);
                     });
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, UpdateDiscordRpcPayload> FORGE_CODEC =
+            StreamCodec.of(
+                    (buf, packet) -> buf.writeBytes(packet.data),
+                    buf -> {
+                        byte[] data = new byte[buf.readableBytes()];
+                        buf.readBytes(data);
+                        return new UpdateDiscordRpcPayload(data);
+                    }
+            );
 
     public static final StreamCodec<FriendlyByteBuf, UpdateDiscordRpcPayload> FABRIC_CODEC =
             StreamCodec.of((buf, value) -> buf.writeBytes(value.data),
