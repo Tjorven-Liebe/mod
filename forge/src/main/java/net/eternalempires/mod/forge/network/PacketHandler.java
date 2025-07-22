@@ -11,7 +11,7 @@ import net.minecraftforge.network.SimpleChannel;
 import org.jetbrains.annotations.NotNull;
 
 @RequiredArgsConstructor(onConstructor_ = @Inject)
-public class PacketHandler {
+public final class PacketHandler {
 
     @NotNull
     private final RichPresenceService richPresenceService;
@@ -25,9 +25,10 @@ public class PacketHandler {
             .simpleChannel()
             .play()
             .clientbound()
-            .add(UpdateDiscordRpcPayload.class, UpdateDiscordRpcPayload.FORGE_CODEC, (packet, context) -> {
-                packet.handlePayload(this.richPresenceService);
-            })
+            .add(UpdateDiscordRpcPayload.class, UpdateDiscordRpcPayload.FORGE_CODEC,
+                    (packet, context) -> {
+                        packet.handlePayload(this.richPresenceService);
+                    })
             .build();
 
     public static void register() {

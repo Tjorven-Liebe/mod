@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 
 @Slf4j
 @Singleton
-public class RichPresenceService implements Runnable {
+public final class RichPresenceService implements Runnable {
 
     @NotNull
     private final Thread mainThread = Thread.currentThread();
@@ -45,7 +45,9 @@ public class RichPresenceService implements Runnable {
         startTimeStamp = System.currentTimeMillis();
 
         final DiscordEventHandlers handlers = new DiscordEventHandlers.Builder()
-                .setReadyEventHandler((user) -> log.debug("Discord Rich-Presence ready for user: {}", user.username))
+                .setReadyEventHandler((user) -> {
+                    log.debug("Discord Rich-Presence ready for user: {}", user.username);
+                })
                 .build();
 
         DiscordRPC.discordInitialize(Constants.DISCORD_APPLICATION_ID, handlers, true);
@@ -67,7 +69,10 @@ public class RichPresenceService implements Runnable {
     public void run() {
         callbackThread = Thread.currentThread();
 
-        Preconditions.checkState(callbackThread != mainThread, "This method should not be called from the main thread!");
+        Preconditions.checkState(
+                callbackThread != mainThread,
+                "This method should not be called from the main thread!"
+        );
 
         while (!callbackThread.isInterrupted()) {
             DiscordRPC.discordRunCallbacks();

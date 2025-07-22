@@ -71,7 +71,7 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
 
         final JsonElement root;
         try {
-            JsonReader reader = new JsonReader(new StringReader(rawJson));
+            final JsonReader reader = new JsonReader(new StringReader(rawJson));
             reader.setStrictness(Strictness.LENIENT);
             root = JsonParser.parseReader(reader);
         } catch (JsonSyntaxException e) {

@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Slf4j
 @Mod(Constants.MOD_ID)
-public class EternalEmpiresForge {
+public final class EternalEmpiresForge {
 
     public EternalEmpiresForge() {
         EternalEmpires.init();

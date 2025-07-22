@@ -20,7 +20,7 @@ import java.util.Objects;
 
 @Slf4j
 @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
-public class ClientModEvents {
+public final class ClientModEvents {
 
     @Getter
     @Nullable
@@ -41,14 +41,16 @@ public class ClientModEvents {
         registrar.playToClient(
                 UpdateDiscordRpcPayload.TYPE,
                 UpdateDiscordRpcPayload.BYTEBUF_CODEC,
-                (updateDiscordRpcPayload, context) -> context.enqueueWork(() -> {
-                    log.debug("Received JSON: {}", updateDiscordRpcPayload.json());
+                (updateDiscordRpcPayload, context) -> {
+                    context.enqueueWork(() -> {
+                        log.debug("Received JSON: {}", updateDiscordRpcPayload.json());
 
-                    updateDiscordRpcPayload.handlePayload(Objects.requireNonNull(
-                            commonService.getRichPresenceService(),
-                            "ClientModEvents is not initialized!"
-                    ));
-                })
+                        updateDiscordRpcPayload.handlePayload(Objects.requireNonNull(
+                                commonService.getRichPresenceService(),
+                                "ClientModEvents is not initialized!"
+                        ));
+                    });
+                }
         );
     }
 }

@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Slf4j
-public class UpdateDiscordRpcPayload extends AbstractEternalEmpiresPayload {
+public final class UpdateDiscordRpcPayload extends AbstractEternalEmpiresPayload {
 
     @NotNull
     public static final StreamCodec<@NotNull ByteBuf, @NotNull UpdateDiscordRpcPayload> BYTEBUF_CODEC =

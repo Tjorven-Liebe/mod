@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 @Setter
 @Singleton
-public class NetworkService {
+public final class NetworkService {
 
     @Nullable
     private String lastServerAddress = null;

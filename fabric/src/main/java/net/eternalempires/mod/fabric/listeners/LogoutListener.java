@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor_ = @Inject)
-public class LogoutListener implements ClientPlayConnectionEvents.Disconnect {
+public final class LogoutListener implements ClientPlayConnectionEvents.Disconnect {
 
     @NotNull
     private final NetworkService networkService;

@@ -7,7 +7,7 @@ import net.neoforged.fml.common.Mod;
 
 @Slf4j
 @Mod(Constants.MOD_ID)
-public class EternalEmpiresNeoForge {
+public final class EternalEmpiresNeoForge {
 
     public EternalEmpiresNeoForge() {
         EternalEmpires.init();

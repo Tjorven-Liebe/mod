@@ -16,7 +16,7 @@ import java.util.Objects;
 
 @Slf4j
 @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
-public class JoinListener {
+public final class JoinListener {
 
     @SubscribeEvent
     public static void onPlayerLogin(final @NotNull ClientPlayerNetworkEvent.LoggingIn event) {

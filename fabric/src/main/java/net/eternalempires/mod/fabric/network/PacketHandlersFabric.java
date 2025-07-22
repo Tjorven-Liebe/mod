@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 @Slf4j
 @Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
-public class PacketHandlersFabric {
+public final class PacketHandlersFabric {
 
     @NotNull
     private final RichPresenceService richPresenceService;
@@ -31,7 +31,7 @@ public class PacketHandlersFabric {
         // TODO - Tjorven: should you ignore the closeable?
         context.client().execute(() -> {
             try {
-                log.debug("Received payload: {}", payload.toString());
+                log.debug("Received payload: {}", payload);
 
                 // TODO - Tjorven: better handling for payload | not inside of a packet
                 payload.handlePayload(richPresenceService);

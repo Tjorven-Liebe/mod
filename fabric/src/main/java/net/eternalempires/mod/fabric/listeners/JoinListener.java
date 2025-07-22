@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor_ = @Inject)
-public class JoinListener implements ClientPlayConnectionEvents.Join {
+public final class JoinListener implements ClientPlayConnectionEvents.Join {
 
     private final CommonService commonService;
 

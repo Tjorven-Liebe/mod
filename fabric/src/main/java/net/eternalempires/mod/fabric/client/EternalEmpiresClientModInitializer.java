@@ -10,7 +10,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 
 @Slf4j
-public class EternalEmpiresClientModInitializer implements ClientModInitializer {
+public final class EternalEmpiresClientModInitializer implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {

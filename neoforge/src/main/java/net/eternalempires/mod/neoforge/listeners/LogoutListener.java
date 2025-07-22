@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 @Slf4j
-public class LogoutListener {
+public final class LogoutListener {
 
     @SubscribeEvent
     public static void onPlayerLogout(final @NotNull ClientPlayerNetworkEvent.LoggingOut event) {

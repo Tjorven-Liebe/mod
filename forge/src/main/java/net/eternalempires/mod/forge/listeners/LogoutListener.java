@@ -16,7 +16,7 @@ import java.util.Objects;
 
 @Slf4j
 @Mod.EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class LogoutListener {
+public final class LogoutListener {
 
     @SubscribeEvent
     public static void onPlayerLogout(final @NotNull ClientPlayerNetworkEvent.LoggingOut event) {
