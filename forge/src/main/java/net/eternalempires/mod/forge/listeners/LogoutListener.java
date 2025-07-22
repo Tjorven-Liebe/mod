@@ -1,0 +1,37 @@
+package net.eternalempires.mod.forge.listeners;
+
+import lombok.extern.slf4j.Slf4j;
+import net.eternalempires.mod.common.Constants;
+import net.eternalempires.mod.common.util.NetworkService;
+import net.eternalempires.mod.common.util.ServerCheckService;
+import net.eternalempires.mod.common.util.discord.RichPresenceService;
+import net.eternalempires.mod.forge.ClientModEvents;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+
+@Slf4j
+@Mod.EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
+public class LogoutListener {
+
+    @SubscribeEvent
+    public static void onPlayerLogout(ClientPlayerNetworkEvent.LoggingOut event) {
+        final ServerCheckService serverCheckService = ClientModEvents.getServerCheckService();
+
+        final NetworkService networkService = serverCheckService.getNetworkService();
+        final String lastServerAddress = networkService.getLastServerAddress();
+        final RichPresenceService richPresenceService = serverCheckService.getRichPresenceService();
+
+        // If IP is known and not a Bungee switch
+        if (lastServerAddress == null || !richPresenceService.isStarted()) {
+            return;
+        }
+
+        log.info("Disconnected from server: {}. Stopping Discord RPC.", lastServerAddress);
+
+        richPresenceService.stop();
+        networkService.setLastServerAddress(null);
+    }
+
+}

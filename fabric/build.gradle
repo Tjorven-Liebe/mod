@@ -12,15 +12,14 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${gradle.ext.fabric_api_version}"
 
     implementation 'com.github.Vatuu:discord-rpc:1.6.2'
-
-    compileOnly 'org.projectlombok:lombok:1.18.30'
-    annotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 
 shadowJar {
     archiveClassifier.set('shadowed')
     configurations = [project.configurations.runtimeClasspath] // instead of shadowImpl
     relocate 'com.discordrpc', 'net.eternalempires.shadowed.discordrpc'
+    relocate 'com.google.**', 'net.eternalempires.shadowed.com.google'
+    
     exclude 'com/sun/jna/**'
 }
 

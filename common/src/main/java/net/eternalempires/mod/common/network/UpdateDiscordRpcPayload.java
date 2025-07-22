@@ -2,7 +2,7 @@ package net.eternalempires.mod.common.network;
 
 import io.netty.buffer.ByteBuf;
 import lombok.extern.slf4j.Slf4j;
-import net.eternalempires.mod.common.client.DiscordRPCManager;
+import net.eternalempires.mod.common.util.discord.RichPresenceService;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -75,7 +75,7 @@ public class UpdateDiscordRpcPayload extends AbstractEternalEmpiresPayload {
         if (regionName != null) {
             log.info("[EternalEmpires] Updating location: {}", regionName);
 
-            DiscordRPCManager.updateLocation(regionName);
+            RichPresenceService.updateLocation(regionName);
         } else {
             log.info("[EternalEmpires] Failed to extract region name from JSON");
         }

@@ -19,6 +19,12 @@ repositories {
 }
 
 dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    implementation 'com.google.inject:guice:7.0.0'
+    annotationProcessor 'com.google.inject:guice:7.0.0'
+
     annotationProcessor(manifold.module("preprocessor"))
     annotationProcessor(manifold.module("strings"))
 }

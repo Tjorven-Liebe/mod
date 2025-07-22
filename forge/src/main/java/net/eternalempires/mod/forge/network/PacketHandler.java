@@ -9,13 +9,13 @@ import net.minecraftforge.network.SimpleChannel;
 public class PacketHandler {
     private static final SimpleChannel UPDATE_RPC = ChannelBuilder.named(
                     ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "mod"))
-            .serverAcceptedVersions((_, _) -> true)
-            .clientAcceptedVersions((_, _) -> true)
+            .serverAcceptedVersions((status, i) -> true)
+            .clientAcceptedVersions((status, i) -> true)
             .networkProtocolVersion(1)
             .simpleChannel()
             .play()
             .clientbound()
-            .add(UpdateDiscordRpcPayload.class, UpdateDiscordRpcPayload.FORGE_CODEC, (packet, _) -> {
+            .add(UpdateDiscordRpcPayload.class, UpdateDiscordRpcPayload.FORGE_CODEC, (packet, context) -> {
                 packet.handlePayload();
             })
             .build();

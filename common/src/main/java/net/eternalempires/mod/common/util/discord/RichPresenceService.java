@@ -1,5 +1,6 @@
-package net.eternalempires.mod.common.client;
+package net.eternalempires.mod.common.util.discord;
 
+import com.google.inject.Singleton;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.arikia.dev.drpc.DiscordEventHandlers;
@@ -8,16 +9,17 @@ import net.arikia.dev.drpc.DiscordRichPresence;
 import net.eternalempires.mod.common.Constants;
 
 @Slf4j
-public class DiscordRPCManager {
+@Singleton
+public class RichPresenceService {
 
     @Getter
-    private static boolean started = false;
+    private boolean started = false;
 
-    private static Thread callbackThread;
+    private Thread callbackThread;
 
-    private static long startTimeStamp;
+    private long startTimeStamp;
 
-    public static void start() {
+    public void start() {
         if (started) {
             return;
         }
@@ -56,7 +58,7 @@ public class DiscordRPCManager {
         callbackThread.start();
     }
 
-    public static void stop() {
+    public void stop() {
         if (!started) {
             return;
         }
@@ -72,7 +74,7 @@ public class DiscordRPCManager {
         log.info("Discord RPC stopped.");
     }
 
-    public static void updateLocation(String location) {
+    public void updateLocation(String location) {
         if (!started) {
             return;
         }
