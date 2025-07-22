@@ -2,7 +2,7 @@ package net.eternalempires.mod.neoforge.listeners;
 
 import lombok.extern.slf4j.Slf4j;
 import net.eternalempires.mod.common.Constants;
-import net.eternalempires.mod.common.util.ServerCheckService;
+import net.eternalempires.mod.common.util.CommonService;
 import net.eternalempires.mod.neoforge.ClientModEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
@@ -27,8 +27,7 @@ public class JoinListener {
 
         log.info("Joined server: {}", address);
 
-        ServerCheckService serverCheckService = ClientModEvents.getServerCheckService();
-        serverCheckService.handleLastServer(address);
+        CommonService commonService = ClientModEvents.getCommonService();
+        commonService.handleLastServer(address);
     }
-
 }

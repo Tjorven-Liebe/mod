@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 @Slf4j
 @Getter
 @RequiredArgsConstructor(onConstructor_ = @Inject)
-public class ServerCheckService {
+public class CommonService {
 
     private final RichPresenceService richPresenceService;
     private final NetworkService networkService;

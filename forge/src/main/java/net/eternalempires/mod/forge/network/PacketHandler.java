@@ -1,13 +1,20 @@
 package net.eternalempires.mod.forge.network;
 
+import com.google.inject.Inject;
+import lombok.RequiredArgsConstructor;
 import net.eternalempires.mod.common.Constants;
-import net.eternalempires.mod.common.network.UpdateDiscordRpcPayload;
+import net.eternalempires.mod.common.network.packet.UpdateDiscordRpcPayload;
+import net.eternalempires.mod.common.util.discord.RichPresenceService;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.SimpleChannel;
 
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class PacketHandler {
-    private static final SimpleChannel UPDATE_RPC = ChannelBuilder.named(
+
+    private final RichPresenceService richPresenceService;
+
+    private final SimpleChannel updateRichPresence = ChannelBuilder.named(
                     ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "mod"))
             .serverAcceptedVersions((status, i) -> true)
             .clientAcceptedVersions((status, i) -> true)
@@ -16,7 +23,7 @@ public class PacketHandler {
             .play()
             .clientbound()
             .add(UpdateDiscordRpcPayload.class, UpdateDiscordRpcPayload.FORGE_CODEC, (packet, context) -> {
-                packet.handlePayload();
+                packet.handlePayload(this.richPresenceService);
             })
             .build();
 

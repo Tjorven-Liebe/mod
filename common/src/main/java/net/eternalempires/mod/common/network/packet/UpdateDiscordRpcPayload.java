@@ -1,7 +1,8 @@
-package net.eternalempires.mod.common.network;
+package net.eternalempires.mod.common.network.packet;
 
 import io.netty.buffer.ByteBuf;
 import lombok.extern.slf4j.Slf4j;
+import net.eternalempires.mod.common.network.AbstractEternalEmpiresPayload;
 import net.eternalempires.mod.common.util.discord.RichPresenceService;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -60,24 +61,24 @@ public class UpdateDiscordRpcPayload extends AbstractEternalEmpiresPayload {
     }
 
     @Override
-    public void handlePayload() {
-        log.info("[EternalEmpires] Received JSON: {}", json);
+    public void handlePayload(RichPresenceService service) {
+        log.debug("[EternalEmpires] Received JSON: {}", json);
 
         final String type = getTypeField();
 
         if (!"player_enter_region".equalsIgnoreCase(type)) {
-            log.info("[EternalEmpires] Ignoring non-region payload: type={}", type);
+            log.debug("[EternalEmpires] Ignoring non-region payload: type={}", type);
             return;
         }
 
         final String regionName = extractRegionName();
 
         if (regionName != null) {
-            log.info("[EternalEmpires] Updating location: {}", regionName);
+            log.debug("[EternalEmpires] Updating location: {}", regionName);
 
-            RichPresenceService.updateLocation(regionName);
+            service.updateLocation(regionName);
         } else {
-            log.info("[EternalEmpires] Failed to extract region name from JSON");
+            log.debug("[EternalEmpires] Failed to extract region name from JSON");
         }
     }
 }

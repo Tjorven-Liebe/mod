@@ -12,5 +12,4 @@ public class EternalEmpiresForge {
     public EternalEmpiresForge() {
         EternalEmpires.init();
     }
-
 }

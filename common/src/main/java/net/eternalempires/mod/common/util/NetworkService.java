@@ -10,5 +10,4 @@ import lombok.Setter;
 public class NetworkService {
 
     private String lastServerAddress = null;
-
 }

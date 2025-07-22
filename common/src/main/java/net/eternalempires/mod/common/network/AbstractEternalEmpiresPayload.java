@@ -7,6 +7,8 @@ import com.google.gson.Strictness;
 import com.google.gson.stream.JsonReader;
 import lombok.extern.slf4j.Slf4j;
 import net.eternalempires.mod.common.Constants;
+import net.eternalempires.mod.common.network.packet.UpdateDiscordRpcPayload;
+import net.eternalempires.mod.common.util.discord.RichPresenceService;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
@@ -58,9 +60,9 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
         int jsonStart = this.json.indexOf('{');
         if (jsonStart == -1) return null;
 
-        String rawJson = this.json.substring(jsonStart);
+        final String rawJson = this.json.substring(jsonStart);
 
-        JsonElement root;
+        final JsonElement root;
         try {
             JsonReader reader = new JsonReader(new StringReader(rawJson));
             reader.setStrictness(Strictness.LENIENT);
@@ -70,7 +72,7 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
             return null;
         }
 
-        String[] parts = fieldName.split("\\.");
+        final String[] parts = fieldName.split("\\.");
         JsonElement current = root;
 
         for (String part : parts) {
@@ -82,5 +84,5 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
         return current.isJsonPrimitive() ? current.getAsString() : current.toString();
     }
 
-    public abstract void handlePayload();
+    public abstract void handlePayload(RichPresenceService service);
 }

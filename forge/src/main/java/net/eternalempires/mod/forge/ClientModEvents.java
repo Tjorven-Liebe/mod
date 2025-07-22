@@ -4,7 +4,7 @@ import com.google.inject.Injector;
 import lombok.Getter;
 import net.eternalempires.mod.common.Constants;
 import net.eternalempires.mod.common.client.EternalEmpiresClient;
-import net.eternalempires.mod.common.util.ServerCheckService;
+import net.eternalempires.mod.common.util.CommonService;
 import net.eternalempires.mod.forge.network.PacketHandler;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
@@ -15,13 +15,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class ClientModEvents {
 
     @Getter
-    private static ServerCheckService serverCheckService;
+    private static CommonService commonService;
 
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event) {
-        Injector injector = EternalEmpiresClient.init();
+        final Injector injector = EternalEmpiresClient.init();
 
-        serverCheckService = injector.getInstance(ServerCheckService.class);
+        commonService = injector.getInstance(CommonService.class);
 
         event.enqueueWork(PacketHandler::register);
     }

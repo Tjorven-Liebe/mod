@@ -11,7 +11,7 @@ import net.minecraft.client.multiplayer.ClientPacketListener;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor_ = @Inject)
-public class DisconnectListener implements ClientPlayConnectionEvents.Disconnect {
+public class LogoutListener implements ClientPlayConnectionEvents.Disconnect {
 
     private final NetworkService networkService;
     private final RichPresenceService richPresenceService;

@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.eternalempires.mod.common.Constants;
 import net.eternalempires.mod.common.client.EternalEmpiresClient;
-import net.eternalempires.mod.common.network.UpdateDiscordRpcPayload;
-import net.eternalempires.mod.common.util.ServerCheckService;
+import net.eternalempires.mod.common.network.packet.UpdateDiscordRpcPayload;
+import net.eternalempires.mod.common.util.CommonService;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -19,13 +19,13 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 public class ClientModEvents {
 
     @Getter
-    private static ServerCheckService serverCheckService;
+    private static CommonService commonService;
 
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event) {
-        Injector injector = EternalEmpiresClient.init();
+        final Injector injector = EternalEmpiresClient.init();
 
-        serverCheckService = injector.getInstance(ServerCheckService.class);
+        commonService = injector.getInstance(CommonService.class);
     }
 
     @SubscribeEvent
@@ -39,7 +39,7 @@ public class ClientModEvents {
                 (updateDiscordRpcPayload, context) -> context.enqueueWork(() -> {
                     log.info("[EternalEmpires] Received JSON: {}", updateDiscordRpcPayload.json());
 
-                    updateDiscordRpcPayload.handlePayload();
+                    updateDiscordRpcPayload.handlePayload(commonService.getRichPresenceService());
                 })
         );
     }
