@@ -124,6 +124,7 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
         }
 
         final int jsonStart = this.json.indexOf('{');
+
         if (jsonStart == -1) {
             return null;
         }
@@ -131,9 +132,12 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
         final String rawJson = this.json.substring(jsonStart);
 
         final JsonElement root;
+
         try {
             final JsonReader reader = new JsonReader(new StringReader(rawJson));
+
             reader.setStrictness(Strictness.LENIENT);
+
             root = JsonParser.parseReader(reader);
         } catch (JsonSyntaxException e) {
             log.error("Failed to parse JSON field '{}': {}", fieldName, e.getMessage());
