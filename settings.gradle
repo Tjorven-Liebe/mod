@@ -41,7 +41,9 @@ def loadVersionProperties() {
                 def aNum = aParts[i].isInteger() ? aParts[i].toInteger() : aParts[i]
                 def bNum = bParts[i].isInteger() ? bParts[i].toInteger() : bParts[i]
                 def compare = aNum <=> bNum
-                if (compare != 0) return compare
+                if (compare != 0) {
+                    return compare
+                }
             }
             return aParts.size() <=> bParts.size()
         }

@@ -38,6 +38,7 @@ public final class ClientModEvents {
         final PayloadRegistrar registrar = event.registrar(Constants.MOD_ID)
                 .versioned("1")
                 .optional();
+        
         registrar.playToClient(
                 UpdateDiscordRpcPayload.TYPE,
                 UpdateDiscordRpcPayload.BYTEBUF_CODEC,

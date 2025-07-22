@@ -81,6 +81,7 @@ public final class RichPresenceService implements Runnable {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 log.error("Discord Callback Thread interrupted", e);
+
                 break;
             }
         }

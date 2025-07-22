@@ -62,10 +62,14 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
 
     @Nullable
     protected String extractJsonField(final @NotNull String fieldName) {
-        if (this.json == null) return null;
+        if (this.json == null) {
+            return null;
+        }
 
         final int jsonStart = this.json.indexOf('{');
-        if (jsonStart == -1) return null;
+        if (jsonStart == -1) {
+            return null;
+        }
 
         final String rawJson = this.json.substring(jsonStart);
 
@@ -76,16 +80,24 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
             root = JsonParser.parseReader(reader);
         } catch (JsonSyntaxException e) {
             log.error("Failed to parse JSON field '{}': {}", fieldName, e.getMessage());
+
             return null;
         }
 
         final String[] parts = fieldName.split("\\.");
+
         JsonElement current = root;
 
         for (String part : parts) {
-            if (!current.isJsonObject()) return null;
+            if (!current.isJsonObject()) {
+                return null;
+            }
+
             current = current.getAsJsonObject().get(part);
-            if (current == null) return null;
+
+            if (current == null) {
+                return null;
+            }
         }
 
         return current.isJsonPrimitive() ? current.getAsString() : current.toString();
