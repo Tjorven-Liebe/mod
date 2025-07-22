@@ -14,10 +14,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.eternalempires.mod.fabric.EternalEmpiresFabric"
+      "net.eternalempires.mod.fabric.EternalEmpiresFabricModInitializer"
     ],
     "client": [
-      "net.eternalempires.mod.fabric.client.EternalEmpiresClientFabric"
+      "net.eternalempires.mod.fabric.client.EternalEmpiresClientModInitializer"
     ]
   },
   "mixins": [
