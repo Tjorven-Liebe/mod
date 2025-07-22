@@ -68,7 +68,7 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
             reader.setStrictness(Strictness.LENIENT);
             root = JsonParser.parseReader(reader);
         } catch (JsonSyntaxException e) {
-            log.warn("Failed to parse JSON field '{}': {}", fieldName, e.getMessage());
+            log.error("Failed to parse JSON field '{}': {}", fieldName, e.getMessage());
             return null;
         }
 

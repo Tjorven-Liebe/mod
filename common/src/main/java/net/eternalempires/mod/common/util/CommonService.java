@@ -18,7 +18,7 @@ public class CommonService {
 
     public void handleLastServer(final @NotNull String address) {
         if (address.equals(this.networkService.getLastServerAddress())) {
-            log.info("Bungee switch detected. Keeping Discord RPC running.");
+            log.debug("Server switch detected. Keeping Discord RPC running.");
 
             return;
         }
@@ -27,7 +27,7 @@ public class CommonService {
             return;
         }
 
-        log.info("IP matched! Starting Discord RPC.");
+        log.debug("IP matched! Starting Discord Rich-Presence.");
 
         this.richPresenceService.start();
         this.networkService.setLastServerAddress(address);

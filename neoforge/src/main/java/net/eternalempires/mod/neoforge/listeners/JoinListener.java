@@ -25,7 +25,7 @@ public class JoinListener {
 
         final String address = serverData.ip;
 
-        log.info("Joined server: {}", address);
+        log.debug("Joined server: {}", address);
 
         CommonService commonService = ClientModEvents.getCommonService();
         commonService.handleLastServer(address);

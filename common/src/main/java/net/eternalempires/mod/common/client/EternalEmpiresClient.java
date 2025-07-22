@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 public class EternalEmpiresClient {
 
     public static Injector init() {
-        log.info("Client Init.");
+        log.debug("Client Init.");
 
         return Guice.createInjector();
     }

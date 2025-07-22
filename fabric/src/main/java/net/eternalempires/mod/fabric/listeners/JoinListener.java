@@ -26,7 +26,7 @@ public class JoinListener implements ClientPlayConnectionEvents.Join {
 
         final String ip = serverData.ip;
 
-        log.info("Joined server: {}", ip);
+        log.debug("Joined server: {}", ip);
 
         this.commonService.handleLastServer(ip);
     }
