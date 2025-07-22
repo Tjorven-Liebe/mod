@@ -9,6 +9,7 @@ import net.eternalempires.mod.common.network.UpdateDiscordRpcPayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.EventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
@@ -25,7 +26,7 @@ public class EternalEmpiresNeoForge {
         EternalEmpires.init();
     }
 
-    @EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
     public static class ClientModEvents {
 
         @SubscribeEvent
@@ -50,7 +51,7 @@ public class EternalEmpiresNeoForge {
         }
     }
 
-    @EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
     public static class ServerConnectionHandler {
 
         private static String lastServerIP = null;
