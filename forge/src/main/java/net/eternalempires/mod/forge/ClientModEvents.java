@@ -61,7 +61,7 @@ public final class ClientModEvents {
         final Injector injector = EternalEmpiresClient.init();
 
         commonService = injector.getInstance(CommonService.class);
-        PacketHandler packetHandler = injector.getInstance(PacketHandler.class);
+        final PacketHandler packetHandler = injector.getInstance(PacketHandler.class);
 
         event.enqueueWork(packetHandler::register);
     }
