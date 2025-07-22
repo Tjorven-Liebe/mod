@@ -31,7 +31,7 @@ import net.fabricmc.api.ModInitializer;
  * This class gets initialized when the mod is initialized.
  *
  * @author EternalEmpires
- * @since 07.01. 2025
+ * @since 07/01/2025
  */
 public final class EternalEmpiresFabricModInitializer implements ModInitializer {
 

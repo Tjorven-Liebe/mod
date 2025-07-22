@@ -41,7 +41,7 @@ import org.jetbrains.annotations.Nullable;
  * This class checks if the client is set up.
  *
  * @author EternalEmpires
- * @version 07.22. 2025
+ * @version 07/22/2025
  */
 @Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ClientModEvents {

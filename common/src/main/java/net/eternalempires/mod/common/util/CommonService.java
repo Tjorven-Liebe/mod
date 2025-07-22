@@ -36,7 +36,7 @@ import org.jetbrains.annotations.NotNull;
  * This service combines some of the dependencies for easy access in mod-loaders where DI is not that easy. ( Forge ;( )
  *
  * @author EternalEmpires
- * @since 07.22. 2025
+ * @since 07/22/2025
  */
 @Slf4j
 @Getter
@@ -49,6 +49,11 @@ public final class CommonService {
     @NotNull
     private final NetworkService networkService;
 
+    /**
+     * this will set the address of the last server the player was on
+     *
+     * @param address the address
+     */
     public void handleLastServer(final @NotNull String address) {
         if (address.equals(this.networkService.getLastServerAddress())) {
             log.debug("Server switch detected. Keeping Discord RPC running.");

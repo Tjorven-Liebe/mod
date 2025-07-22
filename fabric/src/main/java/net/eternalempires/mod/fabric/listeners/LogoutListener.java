@@ -38,7 +38,7 @@ import org.jetbrains.annotations.NotNull;
  * This class is used to detect if the client has left a server.
  *
  * @author EternalEmpires
- * @since 07.23. 2025
+ * @since 07/23/2025
  */
 @Slf4j
 @RequiredArgsConstructor(onConstructor_ = @Inject)

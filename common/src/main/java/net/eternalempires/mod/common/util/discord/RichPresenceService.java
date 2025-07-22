@@ -33,6 +33,7 @@ import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.eternalempires.mod.common.Constants;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,7 +45,7 @@ import java.util.concurrent.Executors;
  * The lib "drpc" by artikia is used.
  *
  * @author EternalEmpires
- * @since 07.22. 2025
+ * @since 07/22/2025
  */
 @Slf4j
 @Singleton
@@ -66,6 +67,9 @@ public final class RichPresenceService implements Runnable {
 
     private long startTimeStamp;
 
+    /**
+     * This will start the rich-presence for a client.
+     */
     public void start() {
         if (started) {
             return;
@@ -96,6 +100,12 @@ public final class RichPresenceService implements Runnable {
         executorService.execute(this);
     }
 
+    /**
+     * This method is for internal use. However, it will keep the rich-presence updated.
+     *
+     * @apiNote Internal use
+     */
+    @ApiStatus.Internal
     @Override
     public void run() {
         callbackThread = Thread.currentThread();
@@ -118,6 +128,9 @@ public final class RichPresenceService implements Runnable {
         }
     }
 
+    /**
+     * This method is used to stop the rich-presence.
+     */
     public void stop() {
         if (!started) {
             return;
@@ -134,6 +147,11 @@ public final class RichPresenceService implements Runnable {
         log.debug("Discord Rich-Presence stopped.");
     }
 
+    /**
+     * This method is used to update the location of player.
+     *
+     * @param location most likely the region where the player is in.
+     */
     public void updateLocation(final @NotNull String location) {
         if (!started) {
             return;

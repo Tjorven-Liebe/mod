@@ -22,7 +22,7 @@ import java.util.Objects;
  * This class checks if the client is set up and will listen to the plugin message channel for custom-payload-packets.
  *
  * @author EternalEmpires
- * @version 07.22. 2025
+ * @version 07/22/2025
  */
 @Slf4j
 @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)

@@ -32,7 +32,7 @@ import java.util.List;
 
 /**
  * This class is used to store some common constants.
- * @since 08.06. 2025
+ * @since 08/06/2025
  * @author EternalEmpires
  */
  @UtilityClass

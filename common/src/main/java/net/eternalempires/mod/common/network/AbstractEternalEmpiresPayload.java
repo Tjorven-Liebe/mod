@@ -46,7 +46,7 @@ import java.nio.charset.StandardCharsets;
  * This is effectively a custom-payload-packet that is sent from the minecraft server through the plugin-message-channel.
  * It's data will be (de)serialized as json and transferred byte-wise.
  *
- * @since 07.02. 2025
+ * @since 07/02/2025
  * @author EternalEmpires
  */
 @Slf4j
@@ -73,24 +73,50 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
         this.json = new String(data, StandardCharsets.UTF_8);
     }
 
+    /**
+     * This will encode the data into a ByteBuf.
+     *
+     * @param buffer the ByteBuf to write to.
+     */
     public void encode(final @NotNull FriendlyByteBuf buffer) {
         buffer.writeBytes(data);
     }
 
+    /**
+     * This returns the serialized data.
+     *
+     * @return the data
+     */
     public byte[] data() {
         return data;
     }
 
+    /**
+     * This will return the json that is effectively the data as string
+     *
+     * @return the data as jsonString
+     */
     @Nullable
     public String json() {
         return json;
     }
 
+    /**
+     * This will return the type of the packet
+     *
+     * @return the packet type as String
+     */
     @Nullable
     public String getTypeField() {
         return extractJsonField("type");
     }
 
+    /**
+     * This method is used to extract a field value by a key.
+     *
+     * @param fieldName the key
+     * @return the value as String
+     */
     @Nullable
     protected String extractJsonField(final @NotNull String fieldName) {
         if (this.json == null) {
@@ -134,5 +160,11 @@ public abstract class AbstractEternalEmpiresPayload implements CustomPacketPaylo
         return current.isJsonPrimitive() ? current.getAsString() : current.toString();
     }
 
+    /**
+     * This will handle the payload of the packet.
+     *
+     * @apiNote Will likely be moved in the future to a more robust handling.
+     * @param service this is an instance of the RichPresenceService.
+     */
     public abstract void handlePayload(@NotNull RichPresenceService service);
 }

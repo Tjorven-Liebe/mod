@@ -33,7 +33,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * This class is used for a generic startup for all mod-loaders.
  *
- * @since 08.06. 2025
+ * @since 08/06/2025
  * @author EternalEmpires
  */
 @Slf4j

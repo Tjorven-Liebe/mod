@@ -39,7 +39,7 @@ import java.util.Objects;
  * This class is used to detect if the client has left a server.
  *
  * @author EternalEmpires
- * @since 07.23. 2025
+ * @since 07/23/2025
  */
 @Slf4j
 public final class LogoutListener {

@@ -33,7 +33,7 @@ import org.jetbrains.annotations.Nullable;
  * This service is used to store the information about the last-connected server.
  *
  * @author EternalEmpires
- * @since 08.06. 2025
+ * @since 08/06/2025
  */
 
 @Getter

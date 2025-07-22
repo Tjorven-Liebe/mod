@@ -39,7 +39,7 @@ import org.jetbrains.annotations.NotNull;
  * It will process custom-payload-packets from the plugin-message-channel
  *
  * @author EternalEmpires
- * @since 07.23. 2025
+ * @since 07/23/2025
  */
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public final class PacketHandler {

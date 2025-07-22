@@ -42,7 +42,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @see AbstractEternalEmpiresPayload
  *
- * @since 07.02. 2025
+ * @since 07/02/2025
  * @author EternalEmpires
  */
 @Slf4j
@@ -91,16 +91,31 @@ public final class UpdateDiscordRpcPayload extends AbstractEternalEmpiresPayload
         super(data);
     }
 
+    /**
+     * This will return the type of the custom-payload-packet.
+     *
+     * @return the type
+     */
     @Override
     public @NotNull Type<? extends @NotNull CustomPacketPayload> type() {
         return TYPE;
     }
 
+    /**
+     * This will extract the region name out of the data of the custom-payload-packet
+     *
+     * @return the region name as String
+     */
     @Nullable
     private String extractRegionName() {
         return extractJsonField("data.name");
     }
 
+    /**
+     * This will handle the payload.
+     *
+     * @apiNote Will likely be moved in the future to a more robust handling.
+     */
     @Override
     public void handlePayload(final @NotNull RichPresenceService service) {
         log.debug("Received JSON: {}", json);

@@ -38,7 +38,7 @@ import org.jetbrains.annotations.NotNull;
  * This class will handle packet-related stuff.
  *
  * @author EternalEmpires
- * @since 07.04.2025
+ * @since 07/04/2025
  */
 @Slf4j
 @Singleton

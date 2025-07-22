@@ -37,7 +37,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
  * The Fabric mod initializer.
  *
  * @author EternalEmpires
- * @since 07.01.2025
+ * @since 07/01/2025
  */
 @Slf4j
 public final class EternalEmpiresClientModInitializer implements ClientModInitializer {
