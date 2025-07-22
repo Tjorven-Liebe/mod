@@ -161,7 +161,7 @@ public final class RichPresenceService implements Runnable {
                 .setDetails("Playing on Eternal Empires")
                 //.setBigImage("icon", "Wanderer")
                 .setBigImage("eternalempires_e_1400x1400", "EternalEmpires.net")
-                .setSmallImage("grassblock", "Minecraft " + Constants.VERSION)  //new line, for small image
+                .setSmallImage("grass_block", "Minecraft " + Constants.VERSION)  //new line, for small image
                 .setStartTimestamps(startTimeStamp)
                 .build();
 
