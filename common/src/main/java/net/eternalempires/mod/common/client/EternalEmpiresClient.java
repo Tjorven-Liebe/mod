@@ -40,7 +40,6 @@ import org.jetbrains.annotations.NotNull;
 @UtilityClass
 public final class EternalEmpiresClient {
 
-
     /**
      * Will be called by every mod loader on startup and create a new guice injector instance.
      *
