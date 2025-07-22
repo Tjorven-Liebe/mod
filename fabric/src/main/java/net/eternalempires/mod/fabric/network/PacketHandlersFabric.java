@@ -31,7 +31,7 @@ public class PacketHandlersFabric {
                 // TODO - Tjorven: better handling for payload | not inside of a packet
                 payload.handlePayload(richPresenceService);
             } catch (Exception e) {
-                log.warn("Failed to handle payload ", e);
+                log.error("Failed to handle payload [{}]", payload.getClass().getName(), e);
             }
         });
     }

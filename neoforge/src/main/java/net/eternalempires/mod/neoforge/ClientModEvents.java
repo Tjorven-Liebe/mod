@@ -37,7 +37,7 @@ public class ClientModEvents {
                 UpdateDiscordRpcPayload.TYPE,
                 UpdateDiscordRpcPayload.BYTEBUF_CODEC,
                 (updateDiscordRpcPayload, context) -> context.enqueueWork(() -> {
-                    log.info("[EternalEmpires] Received JSON: {}", updateDiscordRpcPayload.json());
+                    log.debug("[EternalEmpires] Received JSON: {}", updateDiscordRpcPayload.json());
 
                     updateDiscordRpcPayload.handlePayload(commonService.getRichPresenceService());
                 })

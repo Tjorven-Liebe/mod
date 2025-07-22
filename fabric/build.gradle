@@ -18,7 +18,7 @@ shadowJar {
     archiveClassifier.set('shadowed')
     configurations = [project.configurations.runtimeClasspath] // instead of shadowImpl
     relocate 'com.discordrpc', 'net.eternalempires.shadowed.discordrpc'
-    relocate 'com.google.**', 'net.eternalempires.shadowed.com.google'
+    relocate 'com.google.inject.**', 'net.eternalempires.shadowed.com.google.inject'
     
     exclude 'com/sun/jna/**'
 }

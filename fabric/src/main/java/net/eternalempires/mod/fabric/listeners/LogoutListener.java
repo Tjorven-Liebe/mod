@@ -24,7 +24,7 @@ public class LogoutListener implements ClientPlayConnectionEvents.Disconnect {
             return;
         }
 
-        log.debug("Disconnected from server: {}. Stopping Discord RPC.", lastServerIP);
+        log.info("Disconnected from server: {}. Stopping Discord RPC.", lastServerIP);
 
         this.richPresenceService.stop();
 
