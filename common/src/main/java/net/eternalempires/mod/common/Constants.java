@@ -32,10 +32,11 @@ import java.util.List;
 
 /**
  * This class is used to store some common constants.
- * @since 08/06/2025
+ *
  * @author EternalEmpires
+ * @since 08/06/2025
  */
- @UtilityClass
+@UtilityClass
 public final class Constants {
 
     public static final @NotNull String MOD_ID = "eternalempires";
@@ -45,5 +46,13 @@ public final class Constants {
             "beta.eternalempires.dev"
     );
 
-    public static final @NotNull String VERSION = SharedConstants.getCurrentVersion().name();
+    public static final @NotNull String MINECRAFT_VERSION = SharedConstants.getCurrentVersion().name();
+
+    public static final @NotNull String RICH_PRESENCE_STATE = "Playing on Eternal Empires";
+
+    public static final @NotNull String BIG_IMAGE_KEY = "eternalempires_e_1400x1400";
+    public static final @NotNull String BIG_IMAGE_TEXT = "EternalEmpires.net";
+
+    public static final @NotNull String SMALL_IMAGE_KEY = "grass_block";
+    public static final @NotNull String SMALL_IMAGE_TEXT = String.format("Minecraft %s", MINECRAFT_VERSION);
 }

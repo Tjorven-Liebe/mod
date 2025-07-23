@@ -87,11 +87,9 @@ public final class RichPresenceService implements Runnable {
 
         DiscordRPC.discordInitialize(Constants.DISCORD_APPLICATION_ID, handlers, true);
 
-        final DiscordRichPresence presence = new DiscordRichPresence.Builder("Playing on Eternal Empires")
-                //.setDetails("")
-                //.setBigImage("icon", "Eternal Adventure")
-                .setBigImage("eternalempires_e_1400x1400", "EternalEmpires.net")
-                .setSmallImage("grass_block", "Minecraft " + Constants.VERSION)  //new line for small image
+        final DiscordRichPresence presence = new DiscordRichPresence.Builder(Constants.RICH_PRESENCE_STATE)
+                .setBigImage(Constants.BIG_IMAGE_KEY, Constants.BIG_IMAGE_TEXT)
+                .setSmallImage(Constants.SMALL_IMAGE_KEY, Constants.SMALL_IMAGE_TEXT)
                 .setStartTimestamps(startTimeStamp)
                 .build();
 
@@ -157,11 +155,10 @@ public final class RichPresenceService implements Runnable {
             return;
         }
 
-        final DiscordRichPresence presence = new DiscordRichPresence.Builder(location)
-                .setDetails("Playing on Eternal Empires")
-                //.setBigImage("icon", "Wanderer")
-                .setBigImage("eternalempires_e_1400x1400", "EternalEmpires.net")
-                .setSmallImage("grass_block", "Minecraft " + Constants.VERSION)  //new line, for small image
+        final DiscordRichPresence presence = new DiscordRichPresence.Builder(location) // Using the location as state
+                .setDetails(Constants.RICH_PRESENCE_STATE) // Displaying the state as details instead
+                .setBigImage(Constants.BIG_IMAGE_KEY, Constants.BIG_IMAGE_TEXT)
+                .setSmallImage(Constants.SMALL_IMAGE_KEY, Constants.SMALL_IMAGE_TEXT)
                 .setStartTimestamps(startTimeStamp)
                 .build();
 
