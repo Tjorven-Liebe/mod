@@ -70,7 +70,7 @@ public final class PacketHandlersFabric {
             try {
                 log.debug("Received payload: {}", payload);
 
-                // TODO - Tjorven: better handling for payload | not inside of a packet
+                // TODO - Tjorven: Consider validating the payload structure and content before processing.
                 payload.handlePayload(richPresenceService);
             } catch (Exception e) {
                 log.error("Failed to handle payload [{}]", payload.getClass().getName(), e);
