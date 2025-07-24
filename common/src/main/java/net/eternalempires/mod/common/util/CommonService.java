@@ -25,6 +25,7 @@
 package net.eternalempires.mod.common.util;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,7 @@ import org.jetbrains.annotations.NotNull;
  */
 @Slf4j
 @Getter
+@Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public final class CommonService {
 
