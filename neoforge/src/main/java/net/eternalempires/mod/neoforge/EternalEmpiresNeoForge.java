@@ -33,7 +33,7 @@ import net.neoforged.fml.common.Mod;
  * this class is used to init the unified EternalEmpires instance.
  *
  * @author EternalEmpires
- * @since 07.23 2025
+ * @since 07/23/2025
  */
 @Slf4j
 @Mod(Constants.MOD_ID)
