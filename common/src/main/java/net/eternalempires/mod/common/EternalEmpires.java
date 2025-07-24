@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  * on startup
  *
  * @author EternalEmpires
- * @since 08/06/2025
+ * @since 07/23/2025
  */
 @Slf4j
 public final class EternalEmpires {
