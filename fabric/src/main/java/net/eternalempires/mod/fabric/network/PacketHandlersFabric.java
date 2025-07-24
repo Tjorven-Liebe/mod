@@ -55,7 +55,7 @@ public final class PacketHandlersFabric {
     }
 
     /**
-     * this context is registered in the ClientPlayNetworking. It registeres a context-related executor that fetched
+     * this context is registered in the ClientPlayNetworking. It registers a context-related executor that fetches
      * the custom-payload-packets from the plugin-channel.
      *
      * @param payload the payload
