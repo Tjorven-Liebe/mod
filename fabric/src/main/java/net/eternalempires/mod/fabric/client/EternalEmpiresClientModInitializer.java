@@ -22,14 +22,36 @@
  * SOFTWARE.
  */
 
-plugins {
-    id 'root'
-    id 'xyz.wagyourtail.unimined' version '1.4.1-SNAPSHOT' apply false
-    id 'xyz.wagyourtail.jvmdowngrader' version '1.3.0'
-    id 'xyz.wagyourtail.manifold' version '1.0.0-SNAPSHOT'
-    id 'io.github.pacifistmc.forgix' version '2.+'
-}
+package net.eternalempires.mod.fabric.client;
 
-forgix {
-    autoRun = true
+import com.google.inject.Injector;
+import lombok.extern.slf4j.Slf4j;
+import net.eternalempires.mod.common.client.EternalEmpiresClient;
+import net.eternalempires.mod.fabric.listeners.JoinListener;
+import net.eternalempires.mod.fabric.listeners.LogoutListener;
+import net.eternalempires.mod.fabric.network.PacketHandlersFabric;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+
+/**
+ * The Fabric mod initializer.
+ *
+ * @author EternalEmpires
+ * @since 07/01/2025
+ */
+@Slf4j
+public final class EternalEmpiresClientModInitializer implements ClientModInitializer {
+
+    /**
+     * This is run when the mod gets initialized
+     */
+    @Override
+    public void onInitializeClient() {
+        final Injector injector = EternalEmpiresClient.init();
+
+        injector.getInstance(PacketHandlersFabric.class).register();
+
+        ClientPlayConnectionEvents.JOIN.register(injector.getInstance(JoinListener.class));
+        ClientPlayConnectionEvents.DISCONNECT.register(injector.getInstance(LogoutListener.class));
+    }
 }

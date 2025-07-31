@@ -22,14 +22,21 @@
  * SOFTWARE.
  */
 
-plugins {
-    id 'root'
-    id 'xyz.wagyourtail.unimined' version '1.4.1-SNAPSHOT' apply false
-    id 'xyz.wagyourtail.jvmdowngrader' version '1.3.0'
-    id 'xyz.wagyourtail.manifold' version '1.0.0-SNAPSHOT'
-    id 'io.github.pacifistmc.forgix' version '2.+'
-}
+package net.eternalempires.mod.fabric;
 
-forgix {
-    autoRun = true
+import net.eternalempires.mod.common.EternalEmpires;
+import net.fabricmc.api.ModInitializer;
+
+/**
+ * This class gets initialized when the mod is initialized.
+ *
+ * @author EternalEmpires
+ * @since 07/01/2025
+ */
+public final class EternalEmpiresFabricModInitializer implements ModInitializer {
+
+    @Override
+    public void onInitialize() {
+        EternalEmpires.init();
+    }
 }

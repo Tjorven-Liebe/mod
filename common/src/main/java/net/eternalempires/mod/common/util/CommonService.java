@@ -22,33 +22,54 @@
  * SOFTWARE.
  */
 
-package net.eternalempires.mod.common.client;
+package net.eternalempires.mod.common.util;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import lombok.experimental.UtilityClass;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.eternalempires.mod.common.Constants;
+import net.eternalempires.mod.common.util.discord.RichPresenceService;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This class is used for a generic startup for all mod-loaders.
+ * This service combines some of the dependencies for easy access in mod-loaders where DI is not that easy. ( Forge ;( )
  *
- * @since 08/06/2025
  * @author EternalEmpires
+ * @since 07/22/2025
  */
 @Slf4j
-@UtilityClass
-public final class EternalEmpiresClient {
+@Getter
+@Singleton
+@RequiredArgsConstructor(onConstructor_ = @Inject)
+public final class CommonService {
+
+    @NotNull
+    private final RichPresenceService richPresenceService;
+
+    @NotNull
+    private final NetworkService networkService;
 
     /**
-     * Will be called by every mod loader on startup and create a new guice injector instance.
+     * this will set the address of the last server the player was on
      *
-     * @return the created guice injector
+     * @param address the address
      */
-    @NotNull
-    public static Injector init() {
-        log.debug("Client Init.");
+    public void handleLastServer(final @NotNull String address) {
+        if (address.equals(this.networkService.getLastServerAddress())) {
+            log.debug("Server switch detected. Keeping Discord RPC running.");
 
-        return Guice.createInjector();
+            return;
+        }
+
+        if (!Constants.SERVER_IPS.contains(address)) {
+            return;
+        }
+
+        log.debug("IP matched! Starting Discord Rich-Presence.");
+
+        this.richPresenceService.start();
+        this.networkService.setLastServerAddress(address);
     }
 }

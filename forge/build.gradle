@@ -1,3 +1,27 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2025 EternalEmpires.net
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 plugins {
     id 'unimined-forge' // <-- Go here for Forge mixin configuration (CTRL+Left Click)
     id 'com.github.johnrengelman.shadow' version '8.1.1'
@@ -16,18 +40,41 @@ dependencies {
     implementation('com.github.Vatuu:discord-rpc:1.6.2') {
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     }
-
-    compileOnly 'org.projectlombok:lombok:1.18.30'
-    annotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 
 shadowJar {
     archiveClassifier.set('shadowed')
-    configurations = [project.configurations.runtimeClasspath]
 
-    // Relocate Discord RPC (shade into your namespace)
+    // Use selective dependency inclusion (more reliable than configurations)
+    dependencies {
+        include(dependency('com.github.Vatuu:discord-rpc'))
+        include(dependency('com.google.inject:.*'))
+        include(dependency('javax.inject:.*'))
+        include(dependency('jakarta.inject:.*'))  // For NeoForge compatibility
+        include(dependency('aopalliance:.*'))
+
+        // Exclude problematic dependencies
+        exclude(dependency('com.google.code.findbugs:jsr305'))
+        exclude(dependency('com.google.guava:.*'))
+    }
+
+    // Relocate all included packages to avoid conflicts
     relocate 'com.discordrpc', 'net.eternalempires.shadowed.discordrpc'
-    exclude 'com/sun/jna/**'
+    relocate 'com.google.inject', 'net.eternalempires.shadowed.com.google.inject'
+    relocate 'javax.inject', 'net.eternalempires.shadowed.javax.inject'
+    relocate 'jakarta.inject', 'net.eternalempires.shadowed.jakarta.inject'
+    relocate 'org.aopalliance', 'net.eternalempires.shadowed.org.aopalliance'
+
+    // Exclude packages that cause module conflicts across all platforms
+    exclude 'com/google/common/**'          // Guava - provided by all platforms
+    exclude 'com/google/thirdparty/**'      // Guava related
+    exclude 'com/google/errorprone/**'      // Guava related
+    exclude 'com/google/j2objc/**'          // Guava related
+    exclude 'org/checkerframework/**'       // Guava related
+    exclude 'com/sun/jna/**'                // JNA - can cause issues
+    exclude 'javax/annotation/**'           // JSR305 - can cause module conflicts
+    exclude 'META-INF/versions/**'          // Multi-release jar info
+    exclude 'META-INF/versions/9/javax/annotation/**'  // Specific JSR305 conflict
 }
 
 remapJar {

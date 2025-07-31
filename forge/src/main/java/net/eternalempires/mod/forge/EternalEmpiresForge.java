@@ -1,75 +1,45 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2025 EternalEmpires.net
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package net.eternalempires.mod.forge;
 
 import lombok.extern.slf4j.Slf4j;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ServerData;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.eternalempires.mod.common.Constants;
 import net.eternalempires.mod.common.EternalEmpires;
-import net.eternalempires.mod.common.client.DiscordRPCManager;
-import net.eternalempires.mod.common.client.EternalEmpiresClient;
-import net.eternalempires.mod.forge.network.PacketHandler;
+import net.minecraftforge.fml.common.Mod;
 
+/**
+ * this class is used to init the unified EternalEmpires instance.
+ *
+ * @author EternalEmpires
+ * @since 07/23/2025
+ */
 @Slf4j
 @Mod(Constants.MOD_ID)
-public class EternalEmpiresForge {
+public final class EternalEmpiresForge {
 
     public EternalEmpiresForge() {
         EternalEmpires.init();
-    }
-
-    @Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents {
-
-        @SubscribeEvent
-        public static void clientSetup(final FMLClientSetupEvent event) {
-            EternalEmpiresClient.init();
-
-            event.enqueueWork(PacketHandler::register);
-        }
-    }
-
-    @Mod.EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
-    public static class ServerConnectionHandler {
-        private static String lastServerIP = null;
-
-        @SubscribeEvent
-        public static void onPlayerLogin(ClientPlayerNetworkEvent.LoggingIn event) {
-            final ServerData serverData = Minecraft.getInstance().getCurrentServer();
-
-            if (serverData != null) {
-                final String ip = serverData.ip;
-
-                log.info("Joined server: {}", ip);
-
-                if (!ip.equals(lastServerIP)) {
-                    if (Constants.SERVER_IPS.contains(ip)) {
-                        log.info("IP matched! Starting Discord RPC.");
-
-                        DiscordRPCManager.start();
-                    }
-                } else {
-                    log.info("Bungee switch detected. Keeping Discord RPC running.");
-                }
-
-                lastServerIP = ip;
-            }
-        }
-
-        @SubscribeEvent
-        public static void onPlayerLogout(ClientPlayerNetworkEvent.LoggingOut event) {
-            // If IP is known and not a Bungee switch
-            if (lastServerIP != null && DiscordRPCManager.isStarted()) {
-                log.info("Disconnected from server: {}. Stopping Discord RPC.", lastServerIP);
-
-                DiscordRPCManager.stop();
-
-                lastServerIP = null;
-            }
-        }
     }
 }

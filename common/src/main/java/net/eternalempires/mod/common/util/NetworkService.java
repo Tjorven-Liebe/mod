@@ -22,14 +22,25 @@
  * SOFTWARE.
  */
 
-plugins {
-    id 'root'
-    id 'xyz.wagyourtail.unimined' version '1.4.1-SNAPSHOT' apply false
-    id 'xyz.wagyourtail.jvmdowngrader' version '1.3.0'
-    id 'xyz.wagyourtail.manifold' version '1.0.0-SNAPSHOT'
-    id 'io.github.pacifistmc.forgix' version '2.+'
-}
+package net.eternalempires.mod.common.util;
 
-forgix {
-    autoRun = true
+import com.google.inject.Singleton;
+import lombok.Getter;
+import lombok.Setter;
+import org.jetbrains.annotations.Nullable;
+
+/**
+ * This service is used to store the information about the last-connected server.
+ *
+ * @author EternalEmpires
+ * @since 08/06/2025
+ */
+
+@Getter
+@Setter
+@Singleton
+public final class NetworkService {
+
+    @Nullable
+    private String lastServerAddress = null;
 }
